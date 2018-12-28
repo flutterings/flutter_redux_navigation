@@ -1,16 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 
-class NavigationMiddleware<T> implements MiddlewareClass<T> {
-  final GlobalKey<NavigatorState> navigatorState;
+class NavigatorHolder {
+  static final navigatorKey = GlobalKey<NavigatorState>();
+}
 
-  NavigationMiddleware(this.navigatorState);
+class NavigationMiddleware<T> implements MiddlewareClass<T> {
 
   @override
   void call(Store<T> store, dynamic action, NextDispatcher next) {
     if (action is NavigateToAction) {
       final navigationAction = action;
-      final currentState = this.navigatorState.currentState;
+      final currentState = NavigatorHolder.navigatorKey.currentState;
 
       if (navigationAction.shouldReplace) {
         currentState.pushReplacementNamed(navigationAction.name);
