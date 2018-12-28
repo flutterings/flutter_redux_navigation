@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.1.0](https://github.com/esarbanis/flutter_redux_navigation/tree/0.1.0) (2018-12-28)
+[Full Changelog](https://github.com/esarbanis/flutter_redux_navigation/compare/0.0.3...0.1.0)
+
 ## [0.0.3](https://github.com/esarbanis/flutter_redux_navigation/tree/0.0.3) (2018-12-28)
 [Full Changelog](https://github.com/esarbanis/flutter_redux_navigation/compare/0.0.2...0.0.3)
 
