@@ -1,12 +1,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 
+/// Provides a way to keep a reference of the `NavigatorState` globally.
 class NavigatorHolder {
   static final navigatorKey = GlobalKey<NavigatorState>();
 }
 
+/// Intercepts all dispatched [NavigateToAction] in the [Store] and performs
+/// the navigation on the `currentState` of [NavigatorHolder.navigatorKey].
+///
+/// It can perform either a `replace`, a `push` or a `pop` navigation action.
+/// Prerequisite is to have register the appropriate navigation paths in
+/// `onGenerateRoute` method passed to [MaterialApp].
 class NavigationMiddleware<T> implements MiddlewareClass<T> {
-
   @override
   void call(Store<T> store, dynamic action, NextDispatcher next) {
     if (action is NavigateToAction) {
@@ -26,6 +32,7 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
   }
 }
 
+/// The action to be dispatched in the store in order to trigger a navigation.
 class NavigateToAction {
   final String name;
   final bool shouldReplace;
