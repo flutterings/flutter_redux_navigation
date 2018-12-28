@@ -1,0 +1,25 @@
+name: simple_login
+description: Example Application to display the replacement navigation functionality.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  flutter_redux: ^0.5.2
+  flutter_redux_navigation:
+    path: ../../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+  uses-material-design: true
