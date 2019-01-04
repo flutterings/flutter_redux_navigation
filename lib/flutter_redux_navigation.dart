@@ -2,8 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 
 /// Provides a way to keep a reference of the `NavigatorState` globally.
+/// It also keeps a global reference of the `NavigationState`.
 class NavigatorHolder {
   static final navigatorKey = GlobalKey<NavigatorState>();
+  static NavigationState state;
 }
 
 /// Intercepts all dispatched [NavigateToAction] in the [Store] and performs
@@ -21,14 +23,22 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
 
       if (navigationAction.shouldReplace) {
         currentState.pushReplacementNamed(navigationAction.name);
+        this._setState(navigationAction.name);
       } else if (navigationAction.shouldPop) {
         currentState.pop();
+        this._setState(NavigatorHolder.state?.previousPath);
       } else {
         currentState.pushNamed(navigationAction.name);
+        this._setState(navigationAction.name);
       }
     }
 
     next(action);
+  }
+
+  void _setState(String currentPath) {
+    NavigatorHolder.state = NavigationState.transition(
+        NavigatorHolder.state?.currentPath, currentPath);
   }
 }
 
@@ -47,4 +57,17 @@ class NavigateToAction {
 
   factory NavigateToAction.replace(String name) =>
       NavigateToAction(name, true, false);
+}
+
+/// It keeps the current and previous path of the navigation.
+class NavigationState {
+  final String previousPath;
+  final String currentPath;
+
+  NavigationState(this.previousPath, this.currentPath);
+
+  factory NavigationState.initial() => NavigationState(null, null);
+
+  factory NavigationState.transition(String previousPath, String currentPath) =>
+      NavigationState(previousPath, currentPath);
 }

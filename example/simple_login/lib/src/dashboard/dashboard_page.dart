@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:simple_login/src/app_store.dart';
 import 'package:simple_login/src/dashboard/dashboard_bloc.dart';
 
@@ -17,6 +18,17 @@ class _DashboardPageState extends State<DashboardPage> {
       },
       builder: (BuildContext context, DashboardBloc bloc) {
         return Scaffold(
+            drawer: Drawer(
+              child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+                DrawerHeader(
+                  child: Text('Simple Login Example'),
+                ),
+                ListTile(
+                  title: Text('Dashboard'),
+                  selected: NavigatorHolder.state.currentPath == '/dashboard',
+                )
+              ]),
+            ),
             appBar: AppBar(
               title: Text('Dashboard Page'),
             ),
