@@ -21,6 +21,10 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
       final navigationAction = action;
       final currentState = NavigatorHolder.navigatorKey.currentState;
 
+      if (action.preNavigation != null) {
+        action.preNavigation();
+      }
+
       if (navigationAction.shouldReplace) {
         currentState.pushReplacementNamed(navigationAction.name);
         this._setState(navigationAction.name);
@@ -30,6 +34,10 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
       } else {
         currentState.pushNamed(navigationAction.name);
         this._setState(navigationAction.name);
+      }
+
+      if (action.postNavigation != null) {
+        action.postNavigation();
       }
     }
 
@@ -47,16 +55,23 @@ class NavigateToAction {
   final String name;
   final bool shouldReplace;
   final bool shouldPop;
+  final Function preNavigation;
+  final Function postNavigation;
 
-  NavigateToAction(this.name, this.shouldReplace, this.shouldPop);
+  NavigateToAction(this.name, this.shouldReplace, this.shouldPop,
+      this.preNavigation, this.postNavigation);
 
-  factory NavigateToAction.push(String name) =>
-      NavigateToAction(name, false, false);
+  factory NavigateToAction.push(String name,
+          {Function preNavigation, Function postNavigation}) =>
+      NavigateToAction(name, false, false, preNavigation, postNavigation);
 
-  factory NavigateToAction.pop() => NavigateToAction(null, false, true);
+  factory NavigateToAction.pop(
+          {Function preNavigation, Function postNavigation}) =>
+      NavigateToAction(null, false, true, preNavigation, postNavigation);
 
-  factory NavigateToAction.replace(String name) =>
-      NavigateToAction(name, true, false);
+  factory NavigateToAction.replace(String name,
+          {Function preNavigation, Function postNavigation}) =>
+      NavigateToAction(name, true, false, preNavigation, postNavigation);
 }
 
 /// It keeps the current and previous path of the navigation.
