@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
 
-/// Provides a way to keep a reference of the `NavigatorState` globally.
-/// It also keeps a global reference of the `NavigationState`.
+/// Provides a way to keep a reference of the [NavigatorState] globally.
+/// It also keeps a global reference of the [NavigationState].
 class NavigatorHolder {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static NavigationState state;
@@ -15,11 +15,16 @@ class NavigatorHolder {
 /// Prerequisite is to have register the appropriate navigation paths in
 /// `onGenerateRoute` method passed to [MaterialApp].
 class NavigationMiddleware<T> implements MiddlewareClass<T> {
+  final NavigatorState currentState;
+
+  NavigationMiddleware({this.currentState});
+
   @override
   void call(Store<T> store, dynamic action, NextDispatcher next) {
     if (action is NavigateToAction) {
       final navigationAction = action;
-      final currentState = NavigatorHolder.navigatorKey.currentState;
+      final currentState =
+          this.currentState ?? NavigatorHolder.navigatorKey.currentState;
 
       if (action.preNavigation != null) {
         action.preNavigation();
@@ -53,13 +58,32 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
 /// The action to be dispatched in the store in order to trigger a navigation.
 class NavigateToAction {
   final String name;
+
+  /// If true the [Navigator.pushReplacementNamed] will be called with the
+  /// specified [name].
   final bool shouldReplace;
+
+  /// If true the [Navigator.pop] will be called.
   final bool shouldPop;
+
+  /// Optional callback function to be called before the actual navigation.
+  /// e.g. activate the loader.
   final Function preNavigation;
+
+  /// Optional callback function to be called after the actual navigation.
+  /// e.g. de-activate the loader.
   final Function postNavigation;
 
+  /// Create a navigation action.
+  ///
+  /// The [name], [shouldReplace] and [shouldPop] parameters must not be null
+  /// and only one of them can be true.
+  /// The [preNavigation] and [postNavigation] parameters are optional.
   NavigateToAction(this.name, this.shouldReplace, this.shouldPop,
-      this.preNavigation, this.postNavigation);
+      this.preNavigation, this.postNavigation)
+      : assert(shouldReplace != null),
+        assert(shouldPop != null),
+        assert(!(shouldPop && shouldReplace));
 
   factory NavigateToAction.push(String name,
           {Function preNavigation, Function postNavigation}) =>
