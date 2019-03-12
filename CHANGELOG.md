@@ -1,5 +1,8 @@
 # Change Log
 
+## [v0.3.2](https://github.com/flutterings/flutter_redux_navigation/tree/v0.3.2) (2019-03-12)
+[Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.3.1...v0.3.2)
+
 ## [v0.3.1](https://github.com/flutterings/flutter_redux_navigation/tree/v0.3.1) (2019-03-03)
 [Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/0.3.0...v0.3.1)
 
