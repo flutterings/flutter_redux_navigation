@@ -108,5 +108,51 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 ```
+
+## How to use pre and post navigation hooks
+
+Let's use the same example as before, but now let's assume that you want to start a loader whilst navigating to the dashboard and stop it once you have navigated. 
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+class LoginPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => LoginPageState();
+}
+
+class LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, AuthBloc>(
+      converter: (store) {
+        return store;
+      },
+      builder: (BuildContext context, Store<AppState> store) {
+        return Scaffold(body: Builder(
+          builder: (BuildContext context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                onPressed: () {
+                  store.dispatch(
+                    NavigateToAction.replace(
+                      '/dashboard',
+                      preNavigation: () => store.dispatch(StartLoadingAction()),
+                      postNavigation: () => store.dispatch(StopLoadingAction()),
+                    ),
+                  );
+                },
+                child: Text('Login'),
+              )
+              ],
+            );
+          },
+        ));
+      },
+    );
+  }
+}
