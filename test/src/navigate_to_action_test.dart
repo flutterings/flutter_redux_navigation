@@ -2,6 +2,17 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('should not allow for shouldReplace and shouldPop to be null', () {
+    expect(() => NavigateToAction('name', null, true, null, null),
+        throwsAssertionError);
+
+    expect(() => NavigateToAction('name', true, null, null, null),
+        throwsAssertionError);
+
+    expect(() => NavigateToAction('name', null, null, null, null),
+        throwsAssertionError);
+  });
+
   test('should not allow both shouldReplace and shouldPop to be true', () {
     expect(() => NavigateToAction('name', true, true, null, null),
         throwsAssertionError);
