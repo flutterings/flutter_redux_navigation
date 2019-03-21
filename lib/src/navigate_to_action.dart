@@ -26,6 +26,12 @@ class NavigateToAction {
   /// e.g. de-activate the loader.
   final Function postNavigation;
 
+  /// Optional object to be passed either in [NavigationType.shouldPush] or
+  /// [NavigationType.shouldReplace].
+  ///
+  /// It will be ignored if passed with type [NavigationType.shouldPop]
+  final Object arguments;
+
   /// Create a navigation action.
   ///
   /// The [name] parameter must not be null.
@@ -33,7 +39,8 @@ class NavigateToAction {
   NavigateToAction(this.name,
       {this.type = NavigationType.shouldPush,
       this.preNavigation,
-      this.postNavigation})
+      this.postNavigation,
+      this.arguments})
       : assert(() {
           if (type != NavigationType.shouldPop) {
             return name != null && name.isNotEmpty;
@@ -42,9 +49,13 @@ class NavigateToAction {
         }());
 
   factory NavigateToAction.push(String name,
-          {Function preNavigation, Function postNavigation}) =>
+          {Function preNavigation,
+          Function postNavigation,
+          Object arguments}) =>
       NavigateToAction(name,
-          preNavigation: preNavigation, postNavigation: postNavigation);
+          preNavigation: preNavigation,
+          postNavigation: postNavigation,
+          arguments: arguments);
 
   factory NavigateToAction.pop(
           {Function preNavigation, Function postNavigation}) =>
@@ -54,9 +65,12 @@ class NavigateToAction {
           postNavigation: postNavigation);
 
   factory NavigateToAction.replace(String name,
-          {Function preNavigation, Function postNavigation}) =>
+          {Function preNavigation,
+          Function postNavigation,
+          Object arguments}) =>
       NavigateToAction(name,
           type: NavigationType.shouldReplace,
           preNavigation: preNavigation,
-          postNavigation: postNavigation);
+          postNavigation: postNavigation,
+          arguments: arguments);
 }
