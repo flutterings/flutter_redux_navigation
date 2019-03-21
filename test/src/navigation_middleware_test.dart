@@ -47,6 +47,19 @@ void main() {
       verifyNever(navigatorState.pop());
     });
 
+    test('should call pushNamed on currentState with arguments', () {
+      final store = MockStore();
+      final navigatorState = MockNavigatorState();
+      final arguments = {};
+
+      NavigationMiddleware(currentState: navigatorState).call(
+          store, NavigateToAction.push('/name', arguments: arguments), (_) {});
+
+      verify(navigatorState.pushNamed('/name', arguments: arguments));
+      verifyNever(navigatorState.pushReplacementNamed(any));
+      verifyNever(navigatorState.pop());
+    });
+
     test('should call pushReplacementNamed on currentState', () {
       final store = MockStore();
       final navigatorState = MockNavigatorState();
@@ -56,6 +69,20 @@ void main() {
 
       verifyNever(navigatorState.pushNamed(any));
       verify(navigatorState.pushReplacementNamed('/name'));
+      verifyNever(navigatorState.pop());
+    });
+
+    test('should call pushReplacementNamed on currentState with arguments', () {
+      final store = MockStore();
+      final navigatorState = MockNavigatorState();
+      final arguments = {};
+
+      NavigationMiddleware(currentState: navigatorState).call(store,
+          NavigateToAction.replace('/name', arguments: arguments), (_) {});
+
+      verifyNever(navigatorState.pushNamed(any));
+      verify(
+          navigatorState.pushReplacementNamed('/name', arguments: arguments));
       verifyNever(navigatorState.pop());
     });
 

@@ -28,7 +28,8 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
 
       switch (navigationAction.type) {
         case NavigationType.shouldReplace:
-          currentState.pushReplacementNamed(navigationAction.name);
+          currentState.pushReplacementNamed(navigationAction.name,
+              arguments: navigationAction.arguments);
           this._setState(navigationAction.name);
           break;
         case NavigationType.shouldPop:
@@ -36,7 +37,8 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
           this._setState(NavigatorHolder.state?.previousPath);
           break;
         default:
-          currentState.pushNamed(navigationAction.name);
+          currentState.pushNamed(navigationAction.name,
+              arguments: navigationAction.arguments);
           this._setState(navigationAction.name);
       }
 
