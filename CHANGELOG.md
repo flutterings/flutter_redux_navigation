@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.4.0](https://github.com/flutterings/flutter_redux_navigation/tree/v0.4.0) (2019-03-21)
+[Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.3.3...v0.4.0)
+
+**Closed issues:**
+
+- Arguments [\#1](https://github.com/flutterings/flutter_redux_navigation/issues/1)
+
+**Merged pull requests:**
+
+- add an arguments optional parameter for push and replace [\#2](https://github.com/flutterings/flutter_redux_navigation/pull/2) ([esarbanis](https://github.com/esarbanis))
+
 ## [v0.3.3](https://github.com/flutterings/flutter_redux_navigation/tree/v0.3.3) (2019-03-14)
 [Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.3.2...v0.3.3)
 
