@@ -12,4 +12,5 @@ ios/Runner/GeneratedPluginRegistrant.*
 .idea/
 *.iml
 
-lib/generated
+lib/generated/
+res/values/
