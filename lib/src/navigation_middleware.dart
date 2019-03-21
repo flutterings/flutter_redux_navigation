@@ -26,15 +26,18 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
         action.preNavigation();
       }
 
-      if (navigationAction.shouldReplace) {
-        currentState.pushReplacementNamed(navigationAction.name);
-        this._setState(navigationAction.name);
-      } else if (navigationAction.shouldPop) {
-        currentState.pop();
-        this._setState(NavigatorHolder.state?.previousPath);
-      } else {
-        currentState.pushNamed(navigationAction.name);
-        this._setState(navigationAction.name);
+      switch (navigationAction.type) {
+        case NavigationType.shouldReplace:
+          currentState.pushReplacementNamed(navigationAction.name);
+          this._setState(navigationAction.name);
+          break;
+        case NavigationType.shouldPop:
+          currentState.pop();
+          this._setState(NavigatorHolder.state?.previousPath);
+          break;
+        default:
+          currentState.pushNamed(navigationAction.name);
+          this._setState(navigationAction.name);
       }
 
       if (action.postNavigation != null) {

@@ -1,13 +1,22 @@
+/// Controls the type of navigation method.
+enum NavigationType {
+  /// The [Navigator.pushReplacementNamed] will be called.
+  shouldReplace,
+
+  /// The [Navigator.pop] will be called.
+  shouldPop,
+
+  /// The [Navigator.pushNamed] will be called.
+  shouldPush,
+}
+
 /// The action to be dispatched in the store in order to trigger a navigation.
 class NavigateToAction {
   final String name;
 
-  /// If true the [Navigator.pushReplacementNamed] will be called with the
-  /// specified [name].
-  final bool shouldReplace;
-
-  /// If true the [Navigator.pop] will be called.
-  final bool shouldPop;
+  /// Controls the method to be called on the [Navigator] with the specified
+  /// [name].
+  final NavigationType type;
 
   /// Optional callback function to be called before the actual navigation.
   /// e.g. activate the loader.
@@ -19,24 +28,35 @@ class NavigateToAction {
 
   /// Create a navigation action.
   ///
-  /// The [name], [shouldReplace] and [shouldPop] parameters must not be null
-  /// and only one of them can be true.
+  /// The [name] parameter must not be null.
   /// The [preNavigation] and [postNavigation] parameters are optional.
-  NavigateToAction(this.name, this.shouldReplace, this.shouldPop,
-      this.preNavigation, this.postNavigation)
-      : assert(shouldReplace != null),
-        assert(shouldPop != null),
-        assert(!(shouldPop && shouldReplace));
+  NavigateToAction(this.name,
+      {this.type = NavigationType.shouldPush,
+      this.preNavigation,
+      this.postNavigation})
+      : assert(() {
+          if (type != NavigationType.shouldPop) {
+            return name != null && name.isNotEmpty;
+          }
+          return true;
+        }());
 
   factory NavigateToAction.push(String name,
           {Function preNavigation, Function postNavigation}) =>
-      NavigateToAction(name, false, false, preNavigation, postNavigation);
+      NavigateToAction(name,
+          preNavigation: preNavigation, postNavigation: postNavigation);
 
   factory NavigateToAction.pop(
           {Function preNavigation, Function postNavigation}) =>
-      NavigateToAction(null, false, true, preNavigation, postNavigation);
+      NavigateToAction(null,
+          type: NavigationType.shouldPop,
+          preNavigation: preNavigation,
+          postNavigation: postNavigation);
 
   factory NavigateToAction.replace(String name,
           {Function preNavigation, Function postNavigation}) =>
-      NavigateToAction(name, true, false, preNavigation, postNavigation);
+      NavigateToAction(name,
+          type: NavigationType.shouldReplace,
+          preNavigation: preNavigation,
+          postNavigation: postNavigation);
 }

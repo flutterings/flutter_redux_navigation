@@ -2,28 +2,49 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('should not allow for shouldReplace and shouldPop to be null', () {
-    expect(() => NavigateToAction('name', null, true, null, null),
-        throwsAssertionError);
+  test('should pass the NavigationType.shouldPop and no route name', () {
+    var action = NavigateToAction.pop();
+    expect(action.type, NavigationType.shouldPop);
+    expect(action.name, isNull);
+  });
 
-    expect(() => NavigateToAction('name', true, null, null, null),
-        throwsAssertionError);
+  test('should pass the NavigationType.shouldReplace and route name', () {
+    var action = NavigateToAction.replace('name');
+    expect(action.type, NavigationType.shouldReplace);
+    expect(action.name, 'name');
+  });
 
-    expect(() => NavigateToAction('name', null, null, null, null),
+  test('should pass the NavigationType.shouldPush and route name', () {
+    var action = NavigateToAction.push('name');
+    expect(action.type, NavigationType.shouldPush);
+    expect(action.name, 'name');
+  });
+
+  test('should have a default type of NavigationType.shouldPush', () {
+    var action = NavigateToAction('name');
+    expect(action.type, NavigationType.shouldPush);
+  });
+
+  test(
+      'should throw AssertionError if the route name is null or empty on NavigationType.shouldPush',
+      () {
+    expect(() => NavigateToAction(null), throwsAssertionError);
+    expect(() => NavigateToAction(''), throwsAssertionError);
+  });
+
+  test(
+      'should throw AssertionError if the route name is null or empty on NavigationType.shouldReplace',
+      () {
+    expect(() => NavigateToAction(null, type: NavigationType.shouldReplace),
+        throwsAssertionError);
+    expect(() => NavigateToAction('', type: NavigationType.shouldReplace),
         throwsAssertionError);
   });
 
-  test('should not allow both shouldReplace and shouldPop to be true', () {
-    expect(() => NavigateToAction('name', true, true, null, null),
-        throwsAssertionError);
-  });
-
-  test('should allow both shouldReplace and shouldPop to be false', () {
-    expect(NavigateToAction('name', false, false, null, null), isNotNull);
-  });
-
-  test('should not allow only shouldReplace or shouldPop to be true', () {
-    expect(NavigateToAction('name', true, false, null, null), isNotNull);
-    expect(NavigateToAction('name', false, true, null, null), isNotNull);
+  test('should allow null or empty route name on NavigationType.shouldPop', () {
+    expect(() => NavigateToAction(null, type: NavigationType.shouldPop),
+        isNotNull);
+    expect(
+        () => NavigateToAction('', type: NavigationType.shouldPop), isNotNull);
   });
 }
