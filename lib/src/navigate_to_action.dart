@@ -29,14 +29,14 @@ class NavigateToAction {
         assert(!(shouldPop && shouldReplace));
 
   factory NavigateToAction.push(String name,
-      {Function preNavigation, Function postNavigation}) =>
+          {Function preNavigation, Function postNavigation}) =>
       NavigateToAction(name, false, false, preNavigation, postNavigation);
 
   factory NavigateToAction.pop(
-      {Function preNavigation, Function postNavigation}) =>
+          {Function preNavigation, Function postNavigation}) =>
       NavigateToAction(null, false, true, preNavigation, postNavigation);
 
   factory NavigateToAction.replace(String name,
-      {Function preNavigation, Function postNavigation}) =>
+          {Function preNavigation, Function postNavigation}) =>
       NavigateToAction(name, true, false, preNavigation, postNavigation);
 }
