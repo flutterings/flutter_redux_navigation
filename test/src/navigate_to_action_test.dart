@@ -26,25 +26,42 @@ void main() {
   });
 
   test(
-      'should throw AssertionError if the route name is null or empty on NavigationType.shouldPush',
+    'should throw AssertionError if the route name is null or empty on NavigationType.shouldPush',
       () {
-    expect(() => NavigateToAction(null), throwsAssertionError);
-    expect(() => NavigateToAction(''), throwsAssertionError);
-  });
+      expect(() => NavigateToAction(null), throwsAssertionError);
+      expect(() => NavigateToAction(''), throwsAssertionError);
+    });
 
   test(
-      'should throw AssertionError if the route name is null or empty on NavigationType.shouldReplace',
+    'should throw AssertionError if the route name is null or empty on NavigationType.shouldReplace',
       () {
-    expect(() => NavigateToAction(null, type: NavigationType.shouldReplace),
+      expect(() => NavigateToAction(null, type: NavigationType.shouldReplace),
         throwsAssertionError);
-    expect(() => NavigateToAction('', type: NavigationType.shouldReplace),
+      expect(() => NavigateToAction('', type: NavigationType.shouldReplace),
         throwsAssertionError);
-  });
+    });
 
   test('should allow null or empty route name on NavigationType.shouldPop', () {
     expect(() => NavigateToAction(null, type: NavigationType.shouldPop),
-        isNotNull);
+      isNotNull);
     expect(
         () => NavigateToAction('', type: NavigationType.shouldPop), isNotNull);
   });
+
+  test(
+    'should throw AssertionError if the route name is null or empty or predicate is null on NavigationType.pushNamedAndRemoveUntil',
+      () {
+      expect(() =>
+        NavigateToAction(
+          null, type: NavigationType.shouldPushNamedAndRemoveUntil),
+        throwsAssertionError);
+      expect(() =>
+        NavigateToAction(
+          '', type: NavigationType.shouldPushNamedAndRemoveUntil),
+        throwsAssertionError);
+      expect(() =>
+        NavigateToAction(
+          'name', type: NavigationType.shouldPushNamedAndRemoveUntil),
+        throwsAssertionError);
+    });
 }
