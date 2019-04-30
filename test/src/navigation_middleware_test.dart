@@ -232,7 +232,7 @@ void main() {
       });
 
     test(
-      'should store currentPath as the previousPath on every replace transition',
+      'should keep previousPath on every replace transition',
         () {
         final store = MockStore();
         final navigatorState = MockNavigatorState();
@@ -242,7 +242,7 @@ void main() {
         middleware.call(store, NavigateToAction.replace('/second'), (_) {});
 
         expect(NavigatorHolder.state.currentPath, '/second');
-        expect(NavigatorHolder.state.previousPath, '/first');
+        expect(NavigatorHolder.state.previousPath, null);
       });
 
     test('should reverse the path order on every pop transition', () {

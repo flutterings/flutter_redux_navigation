@@ -30,23 +30,23 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
       switch (navigationAction.type) {
         case NavigationType.shouldReplace:
           currentState.pushReplacementNamed(navigationAction.name,
-            arguments: navigationAction.arguments);
-          this._setState(navigationAction.name);
+              arguments: navigationAction.arguments);
+          this._setStatePrevious(navigationAction.name);
           break;
         case NavigationType.shouldPop:
           currentState.pop();
-          this._setState(NavigatorHolder.state?.previousPath);
+          this._setStateCurrent(NavigatorHolder.state?.previousPath);
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
           currentState.pushNamedAndRemoveUntil(
             navigationAction.name, navigationAction.predicate,
             arguments: navigationAction.arguments);
-          this._setState(null);
+          this._setStateCurrent(null);
           break;
         default:
           currentState.pushNamed(navigationAction.name,
-            arguments: navigationAction.arguments);
-          this._setState(navigationAction.name);
+              arguments: navigationAction.arguments);
+          this._setStateCurrent(navigationAction.name);
       }
 
       if (action.postNavigation != null) {
@@ -57,8 +57,17 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
     next(action);
   }
 
-  void _setState(String currentPath) {
+  /// Set new state and keeps currentPath as previousPath.
+  /// For POP and PUSH actions.
+  void _setStateCurrent(String currentPath) {
     NavigatorHolder.state = NavigationState.transition(
       NavigatorHolder.state?.currentPath, currentPath);
+  }
+
+  /// Set new state and keeps previousPath.
+  /// For REPLACE action.
+  void _setStatePrevious(String currentPath) {
+    NavigatorHolder.state = NavigationState.transition(
+        NavigatorHolder.state?.previousPath, currentPath);
   }
 }
