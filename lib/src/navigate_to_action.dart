@@ -13,6 +13,9 @@ enum NavigationType {
 
   /// The [Navigator.pushNamedAndRemoveUntil] will be called.
   shouldPushNamedAndRemoveUntil,
+
+  /// The [Navigator.popUntil] will be called.
+  shouldPopUntil,
 }
 
 /// The action to be dispatched in the store in order to trigger a navigation.
@@ -38,7 +41,7 @@ class NavigateToAction {
   final Object arguments;
 
   /// Optional object to be passed either in [NavigationType.shouldPushNamedAndRemoveUntil]
-  ///
+  /// or in [NavigationType.shouldPopUntil]
   /// It will be ignored if passed with any other type.
   final RoutePredicate predicate;
 
@@ -46,57 +49,89 @@ class NavigateToAction {
   ///
   /// The [name] parameter must not be null.
   /// The [preNavigation] and [postNavigation] parameters are optional.
-  NavigateToAction(this.name,
-    {this.type = NavigationType.shouldPush,
-      this.preNavigation,
-      this.postNavigation,
-      this.arguments,
-      this.predicate})
-    : assert(() {
-    if (type == NavigationType.shouldPushNamedAndRemoveUntil) {
-      return predicate != null;
-    }
-    if (type != NavigationType.shouldPop) {
-      return name != null && name.isNotEmpty;
-    }
-    return true;
-  }());
+  NavigateToAction(
+    this.name, {
+    this.type = NavigationType.shouldPush,
+    this.preNavigation,
+    this.postNavigation,
+    this.arguments,
+    this.predicate,
+  }) : assert(() {
+          if (type == NavigationType.shouldPushNamedAndRemoveUntil ||
+              type == NavigationType.shouldPopUntil) {
+            return predicate != null;
+          }
+          if (type != NavigationType.shouldPop &&
+              type != NavigationType.shouldPopUntil) {
+            return name != null && name.isNotEmpty;
+          }
+          return true;
+        }());
 
-  factory NavigateToAction.push(String name,
-    {Function preNavigation,
-      Function postNavigation,
-      Object arguments}) =>
-    NavigateToAction(name,
-      preNavigation: preNavigation,
-      postNavigation: postNavigation,
-      arguments: arguments);
+  factory NavigateToAction.push(
+    String name, {
+    Function preNavigation,
+    Function postNavigation,
+    Object arguments,
+  }) =>
+      NavigateToAction(
+        name,
+        preNavigation: preNavigation,
+        postNavigation: postNavigation,
+        arguments: arguments,
+      );
 
-  factory NavigateToAction.pop(
-    {Function preNavigation, Function postNavigation}) =>
-    NavigateToAction(null,
-      type: NavigationType.shouldPop,
-      preNavigation: preNavigation,
-      postNavigation: postNavigation);
+  factory NavigateToAction.pop({
+    Function preNavigation,
+    Function postNavigation,
+  }) =>
+      NavigateToAction(
+        null,
+        type: NavigationType.shouldPop,
+        preNavigation: preNavigation,
+        postNavigation: postNavigation,
+      );
 
-  factory NavigateToAction.replace(String name,
-    {Function preNavigation,
-      Function postNavigation,
-      Object arguments}) =>
-    NavigateToAction(name,
-      type: NavigationType.shouldReplace,
-      preNavigation: preNavigation,
-      postNavigation: postNavigation,
-      arguments: arguments);
+  factory NavigateToAction.replace(
+    String name, {
+    Function preNavigation,
+    Function postNavigation,
+    Object arguments,
+  }) =>
+      NavigateToAction(
+        name,
+        type: NavigationType.shouldReplace,
+        preNavigation: preNavigation,
+        postNavigation: postNavigation,
+        arguments: arguments,
+      );
 
-  factory NavigateToAction.pushNamedAndRemoveUntil(String name,
-    RoutePredicate predicate,
-    {Function preNavigation,
-      Function postNavigation,
-      Object arguments}) =>
-    NavigateToAction(name,
-      type: NavigationType.shouldPushNamedAndRemoveUntil,
-      preNavigation: preNavigation,
-      postNavigation: postNavigation,
-      predicate: predicate,
-      arguments: arguments);
+  factory NavigateToAction.pushNamedAndRemoveUntil(
+    String name,
+    RoutePredicate predicate, {
+    Function preNavigation,
+    Function postNavigation,
+    Object arguments,
+  }) =>
+      NavigateToAction(
+        name,
+        type: NavigationType.shouldPushNamedAndRemoveUntil,
+        preNavigation: preNavigation,
+        postNavigation: postNavigation,
+        predicate: predicate,
+        arguments: arguments,
+      );
+
+  factory NavigateToAction.popUntil(RoutePredicate predicate,
+          {Function preNavigation,
+          Function postNavigation,
+          Object arguments}) =>
+      NavigateToAction(
+        null,
+        type: NavigationType.shouldPopUntil,
+        preNavigation: preNavigation,
+        postNavigation: postNavigation,
+        predicate: predicate,
+        arguments: arguments,
+      );
 }
