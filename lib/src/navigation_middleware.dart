@@ -21,7 +21,7 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
     if (action is NavigateToAction) {
       final navigationAction = action;
       final currentState =
-        this.currentState ?? NavigatorHolder.navigatorKey.currentState;
+          this.currentState ?? NavigatorHolder.navigatorKey.currentState;
 
       if (action.preNavigation != null) {
         action.preNavigation();
@@ -30,7 +30,7 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
       switch (navigationAction.type) {
         case NavigationType.shouldReplace:
           currentState.pushReplacementNamed(navigationAction.name,
-            arguments: navigationAction.arguments);
+              arguments: navigationAction.arguments);
           this._setState(navigationAction.name);
           break;
         case NavigationType.shouldPop:
@@ -39,13 +39,13 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
           currentState.pushNamedAndRemoveUntil(
-            navigationAction.name, navigationAction.predicate,
-            arguments: navigationAction.arguments);
+              navigationAction.name, navigationAction.predicate,
+              arguments: navigationAction.arguments);
           this._setState(null);
           break;
         default:
           currentState.pushNamed(navigationAction.name,
-            arguments: navigationAction.arguments);
+              arguments: navigationAction.arguments);
           this._setState(navigationAction.name);
       }
 
@@ -59,6 +59,6 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
 
   void _setState(String currentPath) {
     NavigatorHolder.state = NavigationState.transition(
-      NavigatorHolder.state?.currentPath, currentPath);
+        NavigatorHolder.state?.currentPath, currentPath);
   }
 }
