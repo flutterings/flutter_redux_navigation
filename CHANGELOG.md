@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.5.0](https://github.com/flutterings/flutter_redux_navigation/tree/v0.5.0) (2019-12-30)
+[Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.4.1...v0.5.0)
+
+**Closed issues:**
+
+- support for redux 4.0.0 [\#12](https://github.com/flutterings/flutter_redux_navigation/issues/12)
+
+**Merged pull requests:**
+
+- feat\(redux\): update redux dependency to 4.0.0 [\#13](https://github.com/flutterings/flutter_redux_navigation/pull/13) ([esarbanis](https://github.com/esarbanis))
+
 ## [v0.4.1](https://github.com/flutterings/flutter_redux_navigation/tree/v0.4.1) (2019-04-19)
 [Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.4.0...v0.4.1)
 
