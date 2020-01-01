@@ -8,7 +8,7 @@ import 'package:redux/redux.dart';
 /// the navigation on the `currentState` of [NavigatorHolder.navigatorKey].
 ///
 /// It can perform either a `replace`, a `push`, a `pushNamedAndRemoveUntil`
-/// or a `pop` navigation action.
+/// a `pop`, or a `popUntil` navigation action.
 /// Prerequisite is to have register the appropriate navigation paths in
 /// `onGenerateRoute` method passed to [MaterialApp].
 class NavigationMiddleware<T> implements MiddlewareClass<T> {
@@ -36,6 +36,10 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
         case NavigationType.shouldPop:
           currentState.pop();
           this._setState(NavigatorHolder.state?.previousPath);
+          break;
+        case NavigationType.shouldPopUntil:
+          currentState.popUntil(navigationAction.predicate);
+          this._setState(null);
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
           currentState.pushNamedAndRemoveUntil(

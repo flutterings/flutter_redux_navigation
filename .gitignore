@@ -14,3 +14,6 @@ ios/Runner/GeneratedPluginRegistrant.*
 
 lib/generated/
 res/values/
+
+# Ignore VS Code settings files
+.vscode/
