@@ -13,6 +13,9 @@ enum NavigationType {
 
   /// The [Navigator.pushNamedAndRemoveUntil] will be called.
   shouldPushNamedAndRemoveUntil,
+
+  /// The [Navigator.popUntil] will be called
+  shouldPopUntil
 }
 
 /// The action to be dispatched in the store in order to trigger a navigation.
@@ -38,6 +41,7 @@ class NavigateToAction {
   final Object arguments;
 
   /// Optional object to be passed either in [NavigationType.shouldPushNamedAndRemoveUntil]
+  /// or in [NavigationType.shouldPopUntil]
   ///
   /// It will be ignored if passed with any other type.
   final RoutePredicate predicate;
@@ -54,6 +58,9 @@ class NavigateToAction {
       this.predicate})
       : assert(() {
           if (type == NavigationType.shouldPushNamedAndRemoveUntil) {
+            return predicate != null;
+          }
+          if (type == NavigationType.shouldPopUntil) {
             return predicate != null;
           }
           if (type != NavigationType.shouldPop) {
@@ -77,6 +84,16 @@ class NavigateToAction {
           type: NavigationType.shouldPop,
           preNavigation: preNavigation,
           postNavigation: postNavigation);
+
+  factory NavigateToAction.popUntil(
+          {Function preNavigation,
+          Function postNavigation,
+          RoutePredicate predicate}) =>
+      NavigateToAction(null,
+          type: NavigationType.shouldPopUntil,
+          preNavigation: preNavigation,
+          postNavigation: postNavigation,
+          predicate: predicate);
 
   factory NavigateToAction.replace(String name,
           {Function preNavigation,
