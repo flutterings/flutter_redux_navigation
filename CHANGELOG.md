@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.5.1](https://github.com/flutterings/flutter_redux_navigation/tree/v0.5.1) (2020-01-06)
+[Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.5.0...v0.5.1)
+
+**Closed issues:**
+
+- Navigator.popUntil [\#11](https://github.com/flutterings/flutter_redux_navigation/issues/11)
+
+**Merged pull requests:**
+
+- Add support for popUntil action. [\#14](https://github.com/flutterings/flutter_redux_navigation/pull/14) ([lukevenediger](https://github.com/lukevenediger))
+
 ## [v0.5.0](https://github.com/flutterings/flutter_redux_navigation/tree/v0.5.0) (2019-12-30)
 [Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.4.1...v0.5.0)
 
