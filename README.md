@@ -7,7 +7,7 @@ Navigation Middleware for Flutter's redux library.
 
 Basic classes that enables page navigation through by utilizing [Redux](https://pub.dartlang.org/packages/redux) Store middleware facility.
 
-This package is built to work with [Redux.dart](https://pub.dartlang.org/packages/redux) 3.0.0+.
+This package is built to work with [Redux.dart](https://pub.dartlang.org/packages/redux) 4.0.0+.
 
 ## Redux Middleware
 
