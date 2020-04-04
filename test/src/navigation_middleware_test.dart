@@ -220,8 +220,8 @@ void main() {
       NavigationMiddleware(currentState: navigatorState)
           .call(store, NavigateToAction.push('/name'), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, '/name');
-      expect(NavigatorHolder.state.previousPath, isNull);
+      expect(NavigatorHolder.state.currentDestination.path, '/name');
+      expect(NavigatorHolder.state.previousDestination, isNull);
     });
 
     test(
@@ -233,8 +233,8 @@ void main() {
       NavigationMiddleware(currentState: navigatorState)
           .call(store, NavigateToAction.replace('/name'), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, '/name');
-      expect(NavigatorHolder.state.previousPath, isNull);
+      expect(NavigatorHolder.state.currentDestination.path, '/name');
+      expect(NavigatorHolder.state.previousDestination, isNull);
     });
 
     test(
@@ -247,8 +247,8 @@ void main() {
       middleware.call(store, NavigateToAction.push('/first'), (_) {});
       middleware.call(store, NavigateToAction.push('/second'), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, '/second');
-      expect(NavigatorHolder.state.previousPath, '/first');
+      expect(NavigatorHolder.state.currentDestination.path, '/second');
+      expect(NavigatorHolder.state.previousDestination.path, '/first');
     });
 
     test(
@@ -261,8 +261,8 @@ void main() {
       middleware.call(store, NavigateToAction.replace('/first'), (_) {});
       middleware.call(store, NavigateToAction.replace('/second'), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, '/second');
-      expect(NavigatorHolder.state.previousPath, '/first');
+      expect(NavigatorHolder.state.currentDestination.path, '/second');
+      expect(NavigatorHolder.state.previousDestination.path, '/first');
     });
 
     test('should reverse the path order on every pop transition', () {
@@ -274,8 +274,8 @@ void main() {
       middleware.call(store, NavigateToAction.push('/second'), (_) {});
       middleware.call(store, NavigateToAction.pop(), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, '/first');
-      expect(NavigatorHolder.state.previousPath, '/second');
+      expect(NavigatorHolder.state.currentDestination.path, '/first');
+      expect(NavigatorHolder.state.previousDestination.path, '/second');
     });
 
     test('should keep initial state when initial navigation is pop', () {
@@ -285,8 +285,8 @@ void main() {
 
       middleware.call(store, NavigateToAction.pop(), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, isNull);
-      expect(NavigatorHolder.state.previousPath, isNull);
+      expect(NavigatorHolder.state.currentDestination, isNull);
+      expect(NavigatorHolder.state.previousDestination, isNull);
     });
 
     test('should keep initial state when initial navigation is popped until',
@@ -298,8 +298,8 @@ void main() {
       middleware.call(
           store, NavigateToAction.popUntil(predicate: (_) => false), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, isNull);
-      expect(NavigatorHolder.state.previousPath, isNull);
+      expect(NavigatorHolder.state.currentDestination, isNull);
+      expect(NavigatorHolder.state.previousDestination, isNull);
     });
 
     test(
@@ -314,8 +314,8 @@ void main() {
       middleware.call(
           store, NavigateToAction.popUntil(predicate: (_) => false), (_) {});
 
-      expect(NavigatorHolder.state.currentPath, isNull);
-      expect(NavigatorHolder.state.previousPath, '/second');
+      expect(NavigatorHolder.state.currentDestination, isNull);
+      expect(NavigatorHolder.state.previousDestination.path, '/second');
     });
   });
 }
