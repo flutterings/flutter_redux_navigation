@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_navigation/src/navigate_to_action.dart';
+import 'package:flutter_redux_navigation/src/navigation_destination.dart';
 import 'package:flutter_redux_navigation/src/navigation_holder.dart';
 import 'package:flutter_redux_navigation/src/navigation_state.dart';
 import 'package:redux/redux.dart';
@@ -31,26 +32,26 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
         case NavigationType.shouldReplace:
           currentState.pushReplacementNamed(navigationAction.name,
               arguments: navigationAction.arguments);
-          this._setState(navigationAction.name, navigationAction.arguments);
+          this._setState(NavigationDestination(navigationAction.name, navigationAction.arguments));
           break;
         case NavigationType.shouldPop:
           currentState.pop();
-          this._setState(NavigatorHolder.state?.previousPath, NavigatorHolder.state?.previousArguments);
+          this._setState(NavigatorHolder.state?.previousDestination);
           break;
         case NavigationType.shouldPopUntil:
           currentState.popUntil(navigationAction.predicate);
-          this._setState(null, null);
+          this._setState(null);
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
           currentState.pushNamedAndRemoveUntil(
               navigationAction.name, navigationAction.predicate,
               arguments: navigationAction.arguments);
-          this._setState(null, null);
+          this._setState(null);
           break;
         default:
           currentState.pushNamed(navigationAction.name,
               arguments: navigationAction.arguments);
-          this._setState(navigationAction.name, navigationAction.arguments);
+          this._setState(NavigationDestination(navigationAction.name, navigationAction.arguments));
       }
 
       if (action.postNavigation != null) {
@@ -61,8 +62,8 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
     next(action);
   }
 
-  void _setState(String currentPath, Object currentArguments) {
+  void _setState(NavigationDestination currentDestination) {
     NavigatorHolder.state = NavigationState.transition(
-        NavigatorHolder.state?.currentPath, NavigatorHolder.state?.currentArguments, currentPath, currentArguments);
+        NavigatorHolder.state?.currentDestination, currentDestination);
   }
 }

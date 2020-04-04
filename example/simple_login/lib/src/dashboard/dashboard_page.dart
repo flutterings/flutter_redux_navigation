@@ -25,7 +25,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 ListTile(
                   title: Text('Dashboard'),
-                  selected: NavigatorHolder.state.currentPath == '/dashboard',
+                  selected: NavigatorHolder.state.currentDestination?.path == '/dashboard',
                 )
               ]),
             ),
