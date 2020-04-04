@@ -31,26 +31,26 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
         case NavigationType.shouldReplace:
           currentState.pushReplacementNamed(navigationAction.name,
               arguments: navigationAction.arguments);
-          this._setState(navigationAction.name);
+          this._setState(navigationAction.name, navigationAction.arguments);
           break;
         case NavigationType.shouldPop:
           currentState.pop();
-          this._setState(NavigatorHolder.state?.previousPath);
+          this._setState(NavigatorHolder.state?.previousPath, NavigatorHolder.state?.previousArguments);
           break;
         case NavigationType.shouldPopUntil:
           currentState.popUntil(navigationAction.predicate);
-          this._setState(null);
+          this._setState(null, null);
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
           currentState.pushNamedAndRemoveUntil(
               navigationAction.name, navigationAction.predicate,
               arguments: navigationAction.arguments);
-          this._setState(null);
+          this._setState(null, null);
           break;
         default:
           currentState.pushNamed(navigationAction.name,
               arguments: navigationAction.arguments);
-          this._setState(navigationAction.name);
+          this._setState(navigationAction.name, navigationAction.arguments);
       }
 
       if (action.postNavigation != null) {
@@ -61,8 +61,8 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
     next(action);
   }
 
-  void _setState(String currentPath) {
+  void _setState(String currentPath, Object currentArguments) {
     NavigatorHolder.state = NavigationState.transition(
-        NavigatorHolder.state?.currentPath, currentPath);
+        NavigatorHolder.state?.currentPath, NavigatorHolder.state?.currentArguments, currentPath, currentArguments);
   }
 }

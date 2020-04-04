@@ -9,17 +9,19 @@ void main() {
     expect(state.currentPath, isNull);
   });
 
-  test('should set previousPath and currentPath on transition', () {
-    final state = NavigationState.transition('previousPath', 'currentPath');
+  test('should set previousPath, previousArguments, currentPath, and currentArguments on transition', () {
+    final state = NavigationState.transition('previousPath', 'previousArguments', 'currentPath', 'currentArguments');
 
     expect(state.previousPath, 'previousPath');
+    expect(state.previousArguments, 'previousArguments');
     expect(state.currentPath, 'currentPath');
+    expect(state.currentArguments, 'currentArguments');
   });
 
   test(
-      'should allow null values for previousPath and currentPath on transition',
+      'should allow null values for previousPath, previousArguments, currentPath, and currentArguments on transition',
       () {
-    final state = NavigationState.transition(null, null);
+    final state = NavigationState.transition(null, null, null, null);
 
     expect(state.previousPath, isNull);
     expect(state.currentPath, isNull);
