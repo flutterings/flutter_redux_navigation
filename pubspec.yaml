@@ -1,6 +1,6 @@
 name: flutter_redux_navigation
 description: A simple reactive navigation middleware for Flutter's redux library.
-version: 0.5.1
+version: 0.6.0
 homepage: https://github.com/flutterings/flutter_redux_navigation
 
 environment:
