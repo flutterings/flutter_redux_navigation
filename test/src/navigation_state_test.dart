@@ -6,6 +6,9 @@ void main() {
   test('should have null destinations as initial state', () {
     final state = NavigationState.initial();
 
+    expect(state.previousPath, isNull);
+    expect(state.currentPath, isNull);
+
     expect(state.previousDestination, isNull);
     expect(state.currentDestination, isNull);
   });
@@ -15,6 +18,9 @@ void main() {
       NavigationDestination('previousPath', 'previousArguments'),
       NavigationDestination('currentPath', 'currentArguments'),
     );
+
+    expect(state.previousPath, 'previousPath');
+    expect(state.currentPath, 'currentPath');
 
     expect(state.previousDestination.path, 'previousPath');
     expect(state.previousDestination.arguments, 'previousArguments');
@@ -26,6 +32,9 @@ void main() {
       'should allow null values for previousDestination, and currentDestination on transition',
       () {
     final state = NavigationState.transition(null, null);
+
+    expect(state.previousPath, isNull);
+    expect(state.currentPath, isNull);
 
     expect(state.previousDestination, isNull);
     expect(state.currentDestination, isNull);
