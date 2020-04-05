@@ -1,5 +1,4 @@
-// Groups together the path and arguments of a navigation destination
-
+/// Groups together the path and arguments of a navigation destination
 class NavigationDestination {
   final String path;
   final Object arguments;
