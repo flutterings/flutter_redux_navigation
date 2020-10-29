@@ -15,7 +15,7 @@ import 'package:redux/redux.dart';
 class NavigationMiddleware<T> implements MiddlewareClass<T> {
   final NavigatorState currentState;
 
-  NavigationMiddleware({this.currentState});
+  const NavigationMiddleware({this.currentState});
 
   @override
   void call(Store<T> store, dynamic action, NextDispatcher next) {
