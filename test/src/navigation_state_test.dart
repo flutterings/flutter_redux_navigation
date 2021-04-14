@@ -22,10 +22,10 @@ void main() {
     expect(state.previousPath, 'previousPath');
     expect(state.currentPath, 'currentPath');
 
-    expect(state.previousDestination.path, 'previousPath');
-    expect(state.previousDestination.arguments, 'previousArguments');
-    expect(state.currentDestination.path, 'currentPath');
-    expect(state.currentDestination.arguments, 'currentArguments');
+    expect(state.previousDestination!.path, 'previousPath');
+    expect(state.previousDestination!.arguments, 'previousArguments');
+    expect(state.currentDestination!.path, 'currentPath');
+    expect(state.currentDestination!.arguments, 'currentArguments');
   });
 
   test(

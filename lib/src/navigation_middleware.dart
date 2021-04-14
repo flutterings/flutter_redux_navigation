@@ -13,7 +13,7 @@ import 'package:redux/redux.dart';
 /// Prerequisite is to have register the appropriate navigation paths in
 /// `onGenerateRoute` method passed to [MaterialApp].
 class NavigationMiddleware<T> implements MiddlewareClass<T> {
-  final NavigatorState currentState;
+  final NavigatorState? currentState;
 
   const NavigationMiddleware({this.currentState});
 
@@ -25,44 +25,46 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
           this.currentState ?? NavigatorHolder.navigatorKey.currentState;
 
       if (action.preNavigation != null) {
-        action.preNavigation();
+        action.preNavigation!();
       }
 
       switch (navigationAction.type) {
         case NavigationType.shouldReplace:
-          currentState.pushReplacementNamed(navigationAction.name,
+          currentState!.pushReplacementNamed(navigationAction.name!,
               arguments: navigationAction.arguments);
-          this._setState(NavigationDestination(navigationAction.name, navigationAction.arguments));
+          this._setState(NavigationDestination(
+              navigationAction.name!, navigationAction.arguments));
           break;
         case NavigationType.shouldPop:
-          currentState.pop();
+          currentState!.pop();
           this._setState(NavigatorHolder.state?.previousDestination);
           break;
         case NavigationType.shouldPopUntil:
-          currentState.popUntil(navigationAction.predicate);
+          currentState!.popUntil(navigationAction.predicate!);
           this._setState(null);
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
-          currentState.pushNamedAndRemoveUntil(
-              navigationAction.name, navigationAction.predicate,
+          currentState!.pushNamedAndRemoveUntil(
+              navigationAction.name!, navigationAction.predicate!,
               arguments: navigationAction.arguments);
           this._setState(null);
           break;
         default:
-          currentState.pushNamed(navigationAction.name,
+          currentState!.pushNamed(navigationAction.name!,
               arguments: navigationAction.arguments);
-          this._setState(NavigationDestination(navigationAction.name, navigationAction.arguments));
+          this._setState(NavigationDestination(
+              navigationAction.name!, navigationAction.arguments));
       }
 
       if (action.postNavigation != null) {
-        action.postNavigation();
+        action.postNavigation!();
       }
     }
 
     next(action);
   }
 
-  void _setState(NavigationDestination currentDestination) {
+  void _setState(NavigationDestination? currentDestination) {
     NavigatorHolder.state = NavigationState.transition(
         NavigatorHolder.state?.currentDestination, currentDestination);
   }
