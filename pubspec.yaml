@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  redux: ^4.0.0
+  redux: ^5.0.0
 
 dev_dependencies:
   flutter_test:
