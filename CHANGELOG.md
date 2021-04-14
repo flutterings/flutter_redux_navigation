@@ -1,5 +1,18 @@
 # Changelog
 
+## [v0.7.0](https://github.com/flutterings/flutter_redux_navigation/tree/v0.7.0) (2021-04-14)
+
+[Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.6.0...v0.7.0)
+
+**Closed issues:**
+
+- Null safety [\#22](https://github.com/flutterings/flutter_redux_navigation/issues/22)
+- Please update to dependency version 5.0.0 of redux [\#21](https://github.com/flutterings/flutter_redux_navigation/issues/21)
+
+**Merged pull requests:**
+
+- Make the NavigationMiddleware constructor const [\#20](https://github.com/flutterings/flutter_redux_navigation/pull/20) ([hacker1024](https://github.com/hacker1024))
+
 ## [v0.6.0](https://github.com/flutterings/flutter_redux_navigation/tree/v0.6.0) (2020-04-05)
 
 [Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.5.1...v0.6.0)
