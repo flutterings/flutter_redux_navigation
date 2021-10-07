@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_redux_navigation/src/navigate_to_action.dart';
-import 'package:flutter_redux_navigation/src/navigation_destination.dart';
-import 'package:flutter_redux_navigation/src/navigation_holder.dart';
-import 'package:flutter_redux_navigation/src/navigation_state.dart';
+import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
+
+import 'navigate_to_action.dart';
+import 'navigation_destination.dart';
+import 'navigation_holder.dart';
+import 'navigation_state.dart';
 
 /// Intercepts all dispatched [NavigateToAction] in the [Store] and performs
 /// the navigation on the `currentState` of [NavigatorHolder.navigatorKey].
