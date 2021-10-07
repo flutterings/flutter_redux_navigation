@@ -1,4 +1,4 @@
-import 'navigation_destination.dart';
+import 'package:flutter_redux_navigation/src/navigation_destination.dart';
 
 /// It keeps the current and previous path of the navigation.
 class NavigationState {
