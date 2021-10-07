@@ -15,6 +15,7 @@ class NavigationState {
 
   factory NavigationState.initial() => NavigationState(null, null);
 
-  factory NavigationState.transition(NavigationDestination? previousDestination, NavigationDestination? currentDestination) =>
+  factory NavigationState.transition(NavigationDestination? previousDestination,
+          NavigationDestination? currentDestination) =>
       NavigationState(previousDestination, currentDestination);
 }

@@ -22,56 +22,48 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
   void call(Store<T> store, dynamic action, NextDispatcher next) {
     if (action is NavigateToAction) {
       final NavigateToAction navigationAction = action;
-      final NavigatorState currentState = (this.currentState ?? NavigatorHolder.navigatorKey.currentState)!;
+      final NavigatorState currentState =
+          (this.currentState ?? NavigatorHolder.navigatorKey.currentState)!;
 
       action.preNavigation?.call();
 
       switch (navigationAction.type) {
         case NavigationType.shouldReplace:
-          currentState.pushReplacementNamed(
-            navigationAction.name!,
-            arguments: navigationAction.arguments
-          );
+          currentState.pushReplacementNamed(navigationAction.name!,
+              arguments: navigationAction.arguments);
           this._setCurrentDestination(NavigationDestination(
-            navigationAction.name!,
-            navigationAction.arguments
-          ));
+              navigationAction.name!, navigationAction.arguments));
 
           break;
         case NavigationType.shouldPop:
           currentState.pop();
-          this._setCurrentDestination(NavigatorHolder.state?.previousDestination);
+          this._setCurrentDestination(
+              NavigatorHolder.state?.previousDestination);
 
           break;
         case NavigationType.shouldPopUntil:
           currentState.popUntil(navigationAction.predicate!);
           this._setDestination(
-            previousDestination: null,
-            currentDestination: NavigationDestination(navigationAction.name!, navigationAction.arguments)
-          );
+              previousDestination: null,
+              currentDestination: NavigationDestination(
+                  navigationAction.name!, navigationAction.arguments));
 
           break;
         case NavigationType.shouldPushNamedAndRemoveUntil:
           currentState.pushNamedAndRemoveUntil(
-            navigationAction.name!,
-            navigationAction.predicate!,
-            arguments: navigationAction.arguments
-          );
+              navigationAction.name!, navigationAction.predicate!,
+              arguments: navigationAction.arguments);
           this._setDestination(
-            previousDestination: null,
-            currentDestination: NavigationDestination(navigationAction.name!, navigationAction.arguments)
-          );
+              previousDestination: null,
+              currentDestination: NavigationDestination(
+                  navigationAction.name!, navigationAction.arguments));
 
           break;
         default:
-          currentState.pushNamed(
-            navigationAction.name!,
-            arguments: navigationAction.arguments
-          );
+          currentState.pushNamed(navigationAction.name!,
+              arguments: navigationAction.arguments);
           this._setCurrentDestination(NavigationDestination(
-            navigationAction.name!,
-            navigationAction.arguments
-          ));
+              navigationAction.name!, navigationAction.arguments));
       }
 
       action.postNavigation?.call();
@@ -80,14 +72,14 @@ class NavigationMiddleware<T> implements MiddlewareClass<T> {
     next(action);
   }
 
-  void _setCurrentDestination(NavigationDestination? currentDestination) => this._setDestination(
-    previousDestination: NavigatorHolder.state?.currentDestination,
-    currentDestination: currentDestination
-  );
+  void _setCurrentDestination(NavigationDestination? currentDestination) =>
+      this._setDestination(
+          previousDestination: NavigatorHolder.state?.currentDestination,
+          currentDestination: currentDestination);
 
-  void _setDestination({ NavigationDestination? previousDestination, NavigationDestination? currentDestination }) =>
-    NavigatorHolder.state = NavigationState.transition(
-        previousDestination,
-        currentDestination
-    );
+  void _setDestination(
+          {NavigationDestination? previousDestination,
+          NavigationDestination? currentDestination}) =>
+      NavigatorHolder.state =
+          NavigationState.transition(previousDestination, currentDestination);
 }
