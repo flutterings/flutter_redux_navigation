@@ -335,11 +335,32 @@ void main() {
       middleware.call(
           store, NavigateToAction.popUntil(predicate: (_) => false), (_) {});
 
-      expect(NavigatorHolder.state!.currentPath, isNull);
-      expect(NavigatorHolder.state!.previousPath, '/second');
+      expect(NavigatorHolder.state!.currentPath, '/second');
+      expect(NavigatorHolder.state!.previousPath, isNull);
 
-      expect(NavigatorHolder.state!.currentDestination, isNull);
-      expect(NavigatorHolder.state!.previousDestination!.path, '/second');
+      expect(NavigatorHolder.state!.currentDestination!.path, '/second');
+      expect(NavigatorHolder.state!.previousDestination!.path, isNull);
+    });
+
+    test(
+        'should report current path where was moved and previous path as null when all navigations are popped',
+        () {
+      final store = MockStore();
+      final navigatorState = MockNavigatorState();
+      final middleware = NavigationMiddleware(currentState: navigatorState);
+
+      middleware.call(store, NavigateToAction.push('/first'), (_) {});
+      middleware.call(store, NavigateToAction.push('/second'), (_) {});
+      middleware.call(
+          store,
+          NavigateToAction.pushNamedAndRemoveUntil('/third', (_) => false),
+          (_) {});
+
+      expect(NavigatorHolder.state!.currentPath, '/third');
+      expect(NavigatorHolder.state!.previousPath, isNull);
+
+      expect(NavigatorHolder.state!.currentDestination, '/third');
+      expect(NavigatorHolder.state!.previousDestination!.path, isNull);
     });
   });
 }
