@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux_navigation/src/navigate_to_action.dart';
 import 'package:flutter_redux_navigation/src/navigation_destination.dart';
 import 'package:flutter_redux_navigation/src/navigation_holder.dart';
