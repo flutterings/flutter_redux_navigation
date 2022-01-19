@@ -1,5 +1,20 @@
 # Changelog
 
+## [v0.7.1](https://github.com/flutterings/flutter_redux_navigation/tree/v0.7.1) (2022-01-19)
+
+[Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.7.0...v0.7.1)
+
+**Closed issues:**
+
+- Support Redux 5.0.0 [\#23](https://github.com/flutterings/flutter_redux_navigation/issues/23)
+- How to dispatch a navigation action during widget build? [\#19](https://github.com/flutterings/flutter_redux_navigation/issues/19)
+- Navigation Called Twice [\#16](https://github.com/flutterings/flutter_redux_navigation/issues/16)
+- Wrong paths using navigation replace. [\#4](https://github.com/flutterings/flutter_redux_navigation/issues/4)
+
+**Merged pull requests:**
+
+- Add alias so NavigationDestination does not break [\#26](https://github.com/flutterings/flutter_redux_navigation/pull/26) ([leonardo2204](https://github.com/leonardo2204))
+
 ## [v0.7.0](https://github.com/flutterings/flutter_redux_navigation/tree/v0.7.0) (2021-04-14)
 
 [Full Changelog](https://github.com/flutterings/flutter_redux_navigation/compare/v0.6.0...v0.7.0)
